@@ -1,0 +1,31 @@
+{
+  "name": "mini-webpack",
+  "version": "0.1.0",
+  "description": "A production-grade Webpack-like bundler focused on predictability, extensibility, and modern defaults.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mini-webpack": "./bin/mini-webpack.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "src",
+    "examples",
+    "docs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "dev": "node ./bin/mini-webpack.js build",
+    "example:build": "node ./bin/mini-webpack.js build --config ./examples/basic-app/mini-webpack.config.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3"
+  }
+}
