@@ -258,21 +258,21 @@ Build the bundler's file discovery and dependency graph layer.
 
 Work:
 
-- resolve the entry file
-- read source files
-- parse `import` statements
-- assign module ids
-- recursively build the dependency graph
+- ~~resolve the entry file~~
+- ~~read source files~~
+- ~~parse `import` statements~~
+- ~~assign module ids~~
+- ~~recursively build the dependency graph~~
 
 Deliverable:
 
-The bundler can print or serialize a dependency graph from a simple JS project.
+~~The bundler can print or serialize a dependency graph from a simple JS project.~~
 
 Success criteria:
 
-- single entry project graph builds correctly
-- circular dependency handling is at least detected or safely represented
-- missing file errors are readable
+- ~~single entry project graph builds correctly~~
+- ~~circular dependency handling is at least detected or safely represented~~
+- ~~missing file errors are readable~~
 
 ### Phase 3: Basic JS Bundling
 

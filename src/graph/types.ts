@@ -14,4 +14,8 @@ export interface ModuleRecord {
 export interface ModuleGraph {
   entryId: string;
   modules: Map<string, ModuleRecord>;
+  circularDependencies: Array<{
+    from: string;
+    to: string;
+  }>;
 }

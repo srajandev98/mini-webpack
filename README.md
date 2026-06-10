@@ -12,7 +12,13 @@ Phase 1 is implemented:
 - compiler context bootstrap
 - example app target
 
-Phase 2 will build the dependency graph layer.
+Phase 2 is implemented:
+
+- entry resolution
+- source file discovery
+- import parsing
+- recursive dependency graph construction
+- cycle-safe graph reporting
 
 ## Quick Start
 
@@ -20,4 +26,8 @@ Phase 2 will build the dependency graph layer.
 2. Run `npm run build`.
 3. Run `node ./bin/mini-webpack.js build --config ./examples/basic-app/mini-webpack.config.json`.
 
-The current build command validates config, resolves the target project, and prints the compilation context that later phases will consume.
+The current build command validates config, resolves the target project, discovers imported modules, and prints a dependency graph report.
+
+Additional example:
+
+- `examples/cycle-app` demonstrates safe circular dependency discovery.

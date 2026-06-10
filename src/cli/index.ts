@@ -1,8 +1,9 @@
-import { access } from "node:fs/promises";
 import process from "node:process";
 
 import { loadConfig } from "../config/load-config.js";
 import { createCompilerContext } from "../core/compiler.js";
+import { formatGraphReport } from "../graph/format-graph.js";
+import { buildModuleGraph } from "../graph/build-graph.js";
 import { MiniWebpackError } from "../shared/error.js";
 
 export async function run(argv: string[]): Promise<number> {
@@ -16,10 +17,9 @@ export async function run(argv: string[]): Promise<number> {
   try {
     const loadedConfig = await loadConfig(configPath);
     const context = createCompilerContext(loadedConfig);
+    const graph = await buildModuleGraph(context);
 
-    await assertPathExists(context.paths.entryFile, "entry file");
-
-    process.stdout.write(`${formatContext(context)}\n`);
+    process.stdout.write(`${formatGraphReport(context, graph)}\n`);
     return 0;
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error.";
@@ -49,36 +49,14 @@ function parseArgs(argv: string[]): ParsedArgs {
   return { command, configPath };
 }
 
-async function assertPathExists(targetPath: string, label: string): Promise<void> {
-  try {
-    await access(targetPath);
-  } catch (error) {
-    throw new MiniWebpackError(`Resolved ${label} does not exist: ${targetPath}`, {
-      cause: error,
-    });
-  }
-}
-
-function formatContext(context: ReturnType<typeof createCompilerContext>): string {
-  return [
-    "mini-webpack foundation ready",
-    `command: ${context.command}`,
-    `config: ${context.configPath}`,
-    `root: ${context.paths.rootDirectory}`,
-    `entry: ${context.paths.entryFile}`,
-    `outputDir: ${context.paths.outputDirectory}`,
-    `outputFile: ${context.paths.outputFile}`,
-  ].join("\n");
-}
-
 function printUsage(): void {
   process.stdout.write(
     [
       "Usage:",
       "  mini-webpack build [--config <path>]",
       "",
-      "Phase 1 commands:",
-      "  build    Load config and resolve compiler context",
+      "Phase 2 commands:",
+      "  build    Resolve the entry file and build a dependency graph",
     ].join("\n") + "\n",
   );
 }
